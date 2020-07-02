@@ -1,0 +1,22 @@
+.main-container {
+    display: grid;
+    grid-template-rows: 40% 40% 20%;
+    height: 100%;
+    text-align: center;
+}
+
+.title {
+    align-self: center;
+    font-family: "Yellowtail";
+    font-size: 55px;
+    font-weight: bold;
+}
+
+.login-options {
+    flex-grow: 1;
+}
+
+.footer {
+    flex-grow: 1;
+    align-self: flex-end;
+}
