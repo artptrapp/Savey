@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -14,14 +14,16 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
-  private appLoading = true
+  public appLoading = true
+  public shouldEnableMenu = false
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private afAuth: AngularFireAuth,
-    private router: Router
+    private router: Router,
+    private menu: MenuController
   ) {
     this.initializeApp();
   }
@@ -30,17 +32,26 @@ export class AppComponent {
       this.afAuth.authState.subscribe((user) => {
         this.appLoading = false;
         if (!user) {
+          this.shouldEnableMenu = false
+          this.menu.enable(false, 'mainMenu')
+          this.menu.close()
           this.router.navigateByUrl('/')
           return
         }
-
+        this.shouldEnableMenu = true
         this.router.navigateByUrl('/main')
       })
-    }, 2000)
+    }, 500)
 
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  logout() {
+    this.shouldEnableMenu = false
+    this.menu.close()
+    this.afAuth.auth.signOut()
   }
 }

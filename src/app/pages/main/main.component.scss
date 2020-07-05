@@ -1,0 +1,23 @@
+.custom-header {
+    position: fixed;
+    font-size: 40px;
+    width: 100%;
+}
+
+.loading {
+    width: 100%;
+}
+
+.loading > ion-spinner {
+    color: white;
+}
+
+.main-content {
+    margin-top: 45px;
+    color: white !important;
+    text-align: center;
+}
+
+.borderless {
+    border: none;
+}

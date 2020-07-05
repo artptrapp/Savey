@@ -12,7 +12,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
+import { AngularFireDatabase } from '@angular/fire/database'
+
 import { Facebook } from '@ionic-native/facebook/ngx'
+import { AuthService } from './services/auth/auth.service';
+import { FileService } from './services/file/file.service';
+import { CommonModule } from '@angular/common';
+import { MainComponent } from './pages/main/main.component';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyD70zwFB9G7AdUGaOGy5hebudoWnwXP_gc",
@@ -26,19 +32,23 @@ export const firebaseConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, MainComponent],
   entryComponents: [],
   imports: [
     BrowserModule, 
     IonicModule.forRoot(), 
     AppRoutingModule, 
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    CommonModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Facebook,
+    AuthService,
+    FileService,
+    AngularFireDatabase,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],
