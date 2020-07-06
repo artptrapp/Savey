@@ -28,20 +28,17 @@ export class AppComponent {
     this.initializeApp();
   }
   initializeApp() {
-    setTimeout(() => {
-      this.afAuth.authState.subscribe((user) => {
-        this.appLoading = false;
-        if (!user) {
-          this.shouldEnableMenu = false
-          this.menu.enable(false, 'mainMenu')
-          this.menu.close()
-          this.router.navigateByUrl('/')
-          return
-        }
-        this.shouldEnableMenu = true
-        this.router.navigateByUrl('/main')
-      })
-    }, 500)
+    this.afAuth.authState.subscribe((user) => {
+      console.log("Auth state changed!", user)
+      this.appLoading = false;
+      if (!user) {
+        this.shouldEnableMenu = false
+        this.router.navigateByUrl('/')
+        return
+      }
+      this.shouldEnableMenu = true
+      this.router.navigateByUrl('/main')
+    })
 
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
@@ -49,9 +46,19 @@ export class AppComponent {
     });
   }
 
-  logout() {
-    this.shouldEnableMenu = false
+  home() {
     this.menu.close()
+    this.router.navigateByUrl('main')
+  }
+
+  about() {
+    this.menu.close()
+    this.router.navigateByUrl('about')
+  }
+
+  logout() {
+    this.menu.close()
+    this.shouldEnableMenu = false
     this.afAuth.auth.signOut()
   }
 }

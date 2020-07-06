@@ -10,5 +10,13 @@
     <div class="loading" *ngIf="!fetchingFiles && files.length === 0">
       You still have no files. Click on the plus icon on the top left corner to add a file.
     </div>
+    <div class="files-parent">
+      <div *ngIf="isUploadingFile" class="file-child uploading-display">
+        <ion-progress-bar color="tertiary" [value]="uploadPercentage"></ion-progress-bar>
+      </div>
+      <div *ngFor="let file of files" class="file-child">
+        <app-file-card [file]="file"></app-file-card>
+      </div>
+    </div>
   </div>
 </ion-content>

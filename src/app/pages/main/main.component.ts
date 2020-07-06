@@ -14,6 +14,9 @@ export class MainComponent implements OnInit {
   private files: IFile[] = []
   private user: firebase.User
 
+  private isUploadingFile = false
+  private uploadPercentage: number = 0
+
   constructor(
     private menu: MenuController,
     private auth: AngularFireAuth,
@@ -36,15 +39,10 @@ export class MainComponent implements OnInit {
     })
   }
 
-  fetchFiles(uid) {
-    try {
-      this.fileService.getAllUserFiles(uid).subscribe((files) => {
-        this.files = files
-        this.fetchingFiles = false
-      })
-    } catch (e) {
-      console.log(e)
-    }
+  async fetchFiles(uid) {
+    this.fetchingFiles = true
+    this.files = await this.fileService.getAllUserFiles(uid)
+    this.fetchingFiles = false
   }
 
   openMenu() {
@@ -52,7 +50,21 @@ export class MainComponent implements OnInit {
   }
 
   addItem() {
+    this.fileService.getAndUpload(this.user.uid, this.onProgress.bind(this), this.onFinish.bind(this))
+  }
 
+  onProgress(percent) {
+    this.isUploadingFile = true
+    this.uploadPercentage = parseInt(percent) / 100
+    console.log(this.uploadPercentage)
+  }
+
+  onFinish() {
+    this.isUploadingFile = false
+    this.fetchFiles(this.user.uid)
+  }
+
+  ngOnDestroy() {
   }
 
 }

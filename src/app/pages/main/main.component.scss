@@ -16,8 +16,32 @@
     margin-top: 45px;
     color: white !important;
     text-align: center;
+    overflow-y: auto;
 }
 
 .borderless {
     border: none;
+}
+
+.files-parent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.file-child {
+    flex: 1 0 45%;
+    max-width: 45%;
+    margin: 5px;
+    height: 200px;
+    padding: 5px;
+    border: 1px solid #ccc
+}
+
+.uploading-display {
+    display: flex;
+}
+
+.uploading-display > ion-progress-bar {
+    align-self: center
 }

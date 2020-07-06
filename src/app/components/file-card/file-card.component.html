@@ -1,0 +1,8 @@
+<div *ngIf="file != null" class="wrapper" (click)="showActions()">
+  <div class="item-info">
+    <img [src]="iconName" class="icon-display" />
+  </div>
+  <span class="footer">
+    {{ file.fileName }}
+  </span>
+</div>

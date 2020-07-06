@@ -13,12 +13,18 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
 import { AngularFireDatabase } from '@angular/fire/database'
+import { AngularFireStorage } from '@angular/fire/storage'
 
 import { Facebook } from '@ionic-native/facebook/ngx'
 import { AuthService } from './services/auth/auth.service';
 import { FileService } from './services/file/file.service';
 import { CommonModule } from '@angular/common';
 import { MainComponent } from './pages/main/main.component';
+
+import { File } from '@ionic-native/file/ngx'
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { FileCardModule } from './components/file-card/file-card.module';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyD70zwFB9G7AdUGaOGy5hebudoWnwXP_gc",
@@ -40,7 +46,8 @@ export const firebaseConfig = {
     AppRoutingModule, 
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
-    CommonModule
+    CommonModule,
+    FileCardModule
   ],
   providers: [
     StatusBar,
@@ -48,7 +55,11 @@ export const firebaseConfig = {
     Facebook,
     AuthService,
     FileService,
+    File,
+    FileChooser,
+    FilePath,
     AngularFireDatabase,
+    AngularFireStorage,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent],
