@@ -10,12 +10,12 @@ import { AngularFireAuth } from 'angularfire2/auth'
 })
 export class MainComponent implements OnInit {
 
-  private fetchingFiles: boolean = false
-  private files: IFile[] = []
-  private user: firebase.User
+  public fetchingFiles: boolean = false
+  public files: IFile[] = []
+  public user: firebase.User
 
-  private isUploadingFile = false
-  private uploadPercentage: number = 0
+  public isUploadingFile = false
+  public uploadPercentage: number = 0
 
   constructor(
     private menu: MenuController,
@@ -43,6 +43,10 @@ export class MainComponent implements OnInit {
     this.fetchingFiles = true
     this.files = await this.fileService.getAllUserFiles(uid)
     this.fetchingFiles = false
+  }
+
+  triggerReload() {
+    this.fetchFiles(this.user.uid)
   }
 
   openMenu() {

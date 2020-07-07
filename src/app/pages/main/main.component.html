@@ -15,7 +15,7 @@
         <ion-progress-bar color="tertiary" [value]="uploadPercentage"></ion-progress-bar>
       </div>
       <div *ngFor="let file of files" class="file-child">
-        <app-file-card [file]="file"></app-file-card>
+        <app-file-card (onTriggerReload)="triggerReload()" [file]="file"></app-file-card>
       </div>
     </div>
   </div>

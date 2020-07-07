@@ -10,7 +10,8 @@ export interface IFile {
     fileExtension: string,
     fileName: string,
     creationDate: Date,
-    downloadUrl: string
+    downloadUrl: string,
+    key: string
 }
 
 @Injectable({
@@ -33,13 +34,28 @@ export class FileService {
             const returnValue = []
             for (let key in result) {
                 const file = result[key] as IFile
+                file.key = key
                 returnValue.push(file)
             }
             return returnValue
         } catch (e) {
-            console.log(e)
             return null
         }
+    }
+
+    public async deleteFile(userId: string, file: IFile): Promise<boolean> {
+        return new Promise((resolve, reject) => {
+            try {
+                const result = this.storage.ref(`${userId}/${file.key}.${file.fileExtension}`).delete()
+                result.subscribe(async () => {
+                    await this.db.database.ref(`${userId}/files/${file.key}`).remove()
+                    resolve(true)
+                })
+            } catch (e) {
+                console.log(e)
+                resolve(false)
+            }
+        })
     }
 
     public async getAndUpload(ownerId: string, onPercentChange: (percent) => void, onFinish: () => void) {
@@ -51,7 +67,7 @@ export class FileService {
             const safeFilePath = this.stripPath(nativeFilePath)
             const fileData = await this.file.readAsArrayBuffer(safeFilePath, safeFileName)
             const desiredFileName = await this.createFileNode(ownerId)
-            const fileRef = this.createUploadRef(ownerId, safeFileName, fileExtension)
+            const fileRef = this.createUploadRef(ownerId, desiredFileName, fileExtension)
             const uploadTask = fileRef.put(fileData)
             const percentageSubscription = uploadTask.percentageChanges().subscribe(async percent => {
                 onPercentChange(percent)

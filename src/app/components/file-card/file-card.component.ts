@@ -1,5 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IFile } from 'src/app/services/file/file.service';
+import { PopoverController } from '@ionic/angular';
+import { FilePopoverComponent } from 'src/app/components/file-popover/file-popover.component'
 
 @Component({
   selector: 'app-file-card',
@@ -9,6 +11,7 @@ import { IFile } from 'src/app/services/file/file.service';
 export class FileCardComponent implements OnInit {
 
   @Input() file: IFile
+  @Output() onTriggerReload: EventEmitter<void> = new EventEmitter();
   
   public iconName: string = ""
 
@@ -22,15 +25,30 @@ export class FileCardComponent implements OnInit {
     'pdf': 'pdf-icon.png'
   }
 
-  constructor() { }
+  constructor(
+    private popoverController: PopoverController
+  ) { }
 
   ngOnInit() {
     const icon = this.iconMapping[this.file.fileExtension] || 'file-icon.png'
     this.iconName = `assets/icon/${icon}`
   }
 
-  showActions() {
-
+  async showActions(event) {
+    const popover = await this.popoverController.create({
+      component: FilePopoverComponent,
+      event: event,
+      translucent: true,
+      showBackdrop: false,
+      componentProps: {
+        selectedFile: this.file
+      }
+    });
+    await popover.present();
+    const result = await popover.onDidDismiss()
+    if (result && result.data && result.data.mustReload) {
+      this.onTriggerReload.emit()
+    }
   }
 
 }

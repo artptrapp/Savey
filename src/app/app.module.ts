@@ -24,7 +24,10 @@ import { MainComponent } from './pages/main/main.component';
 import { File } from '@ionic-native/file/ngx'
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { FileCardModule } from './components/file-card/file-card.module';
+import { FilePopoverComponent } from './components/file-popover/file-popover.component';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyD70zwFB9G7AdUGaOGy5hebudoWnwXP_gc",
@@ -38,7 +41,7 @@ export const firebaseConfig = {
 };
 
 @NgModule({
-  declarations: [AppComponent, MainComponent],
+  declarations: [AppComponent, MainComponent, FilePopoverComponent],
   entryComponents: [],
   imports: [
     BrowserModule, 
@@ -55,9 +58,11 @@ export const firebaseConfig = {
     Facebook,
     AuthService,
     FileService,
+    FileTransfer,
     File,
     FileChooser,
     FilePath,
+    FileOpener,
     AngularFireDatabase,
     AngularFireStorage,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
