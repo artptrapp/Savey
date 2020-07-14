@@ -30,7 +30,7 @@ import { FilePopoverComponent } from './components/file-popover/file-popover.com
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyD70zwFB9G7AdUGaOGy5hebudoWnwXP_gc",
+  apiKey: "-- API KEY --",
   authDomain: "savey-66217.firebaseapp.com",
   databaseURL: "https://savey-66217.firebaseio.com",
   projectId: "savey-66217",
