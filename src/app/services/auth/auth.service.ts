@@ -15,7 +15,16 @@ export class AuthService {
       const facebookLoginResponse = await this.fb.login(['email'])
       const credential = auth.FacebookAuthProvider.credential(facebookLoginResponse.authResponse.accessToken)
       const firebaseResult = await this.auth.auth.signInWithCredential(credential)
-      console.log(firebaseResult)
+      return firebaseResult
+    } catch (e) {
+      console.log(e)
+      return null
+    }
+  }
+
+  public async anonymousLogin(): Promise<any> {
+    try {
+      const firebaseResult = await this.auth.auth.signInAnonymously()
       return firebaseResult
     } catch (e) {
       console.log(e)

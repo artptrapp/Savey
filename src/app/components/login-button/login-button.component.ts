@@ -7,16 +7,22 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class LoginButtonComponent implements OnInit {
 
-  @Input() buttonType: "FACEBOOK" | "GOOGLE" = "FACEBOOK"
+  @Input() buttonType: "FACEBOOK" | "GOOGLE" | "ANONYMOUS" = "FACEBOOK"
   @Input() loading: false
   @Output() onButtonClick: EventEmitter<string> = new EventEmitter();
 
   public innerText: string = ""
+
+  private innerTextMapping = {
+    "FACEBOOK": "Login with Facebook",
+    "GOOGLE": "Login with Google",
+    "ANONYMOUS": "Login anonymously"
+  }
   constructor() {
   }
 
   ngOnInit() {
-    this.innerText = this.buttonType == "FACEBOOK" ? "Login with Facebook" : "Login with Google"
+    this.innerText = this.innerTextMapping[this.buttonType]
   }
 
   handleClick() {

@@ -14,11 +14,16 @@ export class HomePage {
   public handleLogin(type: string) {
     if (type === "FACEBOOK") {
       this.facebookLogin()
+    } else if (type === "ANONYMOUS") {
+      this.anonymousLogin()
     }
   }
 
   private facebookLogin() {
-    console.log("will fb login")
     this.authService.facebookLogin()
+  }
+
+  private anonymousLogin() {
+    this.authService.anonymousLogin()
   }
 }
