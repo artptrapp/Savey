@@ -21,6 +21,16 @@ There are plenty of ways to run an Ionic application. However, since Savey uses 
 ionic cordova run android -l
 ```
 
+## Building on Android
+
+First, run `ionic cordova build android --release`. This will generate a release apk.
+
+After the build, go inside the android folder and run `./gradlew bundle`. Ensure you have the Android Home defined in your PATH.
+
+Then, run `jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.keystore HelloWorld-release-unsigned.apk alias_name`, inside the correct folder, changing the key and apk name to the desired ones.
+
+Finally, run the `zipalign` tool like this `zipalign -v 4 HelloWorld-release-unsigned.apk HelloWorld.apk`
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
